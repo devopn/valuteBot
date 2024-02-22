@@ -5,3 +5,5 @@ lib/
 lib64/
 config.json
 pyenv.cfg
+pyvenv.cfg
+bot.log
