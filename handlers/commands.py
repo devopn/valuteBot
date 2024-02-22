@@ -9,5 +9,5 @@ async def start_command(message: Message):
     await message.answer("Привет, я создан чтобы конвертировать валюты по актуальному курсу.",
                          reply_markup=types.InlineKeyboardMarkup(
                              inline_keyboard=[[types.InlineKeyboardButton(text="Поехали", callback_data="menu:menu")]]
-
     ))
+    message.delete()

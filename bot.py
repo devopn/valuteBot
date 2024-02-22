@@ -20,6 +20,10 @@ async def main():
     bot = Bot(token=APIKEY)
     dp = Dispatcher()
 
+    await bot.set_my_commands(commands=[
+        types.BotCommand(command="start", description="Запуск бота")
+        ])
+
     dp.include_routers(command_router, menu_router, valute_router)
 
     await bot.delete_webhook(drop_pending_updates=True)

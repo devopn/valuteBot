@@ -52,7 +52,7 @@ async def get_amount(message: types.Message, state: FSMContext):
         money_to = money_from * float(curse[data["valute_to"]])
     else:
         money_to = money_from
-    money_to = format(money_to, ".2f")
+    money_to = format(money_to, ".3f")
     await message.delete()
     await data["lastMessage"].edit_text(f"Выбери действие:\n\n{data['amount']} {data['valute_from']} = {money_to} {data['valute_to']}", reply_markup=get_menu_keyboard())
 
