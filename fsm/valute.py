@@ -45,17 +45,20 @@ async def get_amount(message: types.Message, state: FSMContext):
     data = await state.get_data()
     a = valutesAPI.getCurse()
     curse = a['rates']
-    money_from = float(data["amount"])
-    if data["valute_from"] != "RUB":
-        money_from = money_from / float(curse[data["valute_from"]])
-    if data["valute_to"] != "RUB":
-        money_to = money_from * float(curse[data["valute_to"]])
-    else:
-        money_to = money_from
-    money_to = format(money_to, ".3f")
+    try:
+        money_from = float(data["amount"])
+        if data["valute_from"] != "RUB":
+            money_from = money_from / float(curse[data["valute_from"]])
+        if data["valute_to"] != "RUB":
+            money_to = money_from * float(curse[data["valute_to"]])
+        else:
+            money_to = money_from
+        money_to = format(money_to, ".3f")
+        
+        await data["lastMessage"].edit_text(f"Выбери действие:\n\n{data['amount']} {data['valute_from']} = {money_to} {data['valute_to']}", reply_markup=get_menu_keyboard())
+    except:
+        await data["lastMessage"].edit_text("Введены некорректные данные", reply_markup=get_menu_keyboard())
     await message.delete()
-    await data["lastMessage"].edit_text(f"Выбери действие:\n\n{data['amount']} {data['valute_from']} = {money_to} {data['valute_to']}", reply_markup=get_menu_keyboard())
-
 
     # await message.answer(f"{data['amount']} {data['valute_from']} = {valutesAPI.getCurse()['rates'][data['valute_to']]} {data['valute_to']}")
     await state.clear()
