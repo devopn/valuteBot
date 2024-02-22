@@ -13,6 +13,7 @@ logging.basicConfig(level=logging.INFO, filename="bot.log", format="%(asctime)s 
 
 config = json.loads(open("config.json").read())
 APIKEY = config['APIKEY']
+ROCKET = config['XROCKET']
 
 async def main():
     # print(valutesAPI.getCurse())
