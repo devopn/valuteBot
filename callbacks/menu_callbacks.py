@@ -23,6 +23,7 @@ async def main_menu(callback: types.CallbackQuery):
         case "rickroll":
             await callback.message.answer_animation("https://upload.wikimedia.org/wikipedia/ru/6/61/Rickrolling.gif", reply_markup=get_delete_keyboard() )
             await callback.message.edit_text("Выбери действие", reply_markup=menu_keyboard.get_menu_keyboard())
+            await callback.answer("You are rickrolled", show_alert=True)
         case "pay":
             req = {
                 "minPayment": 0.001,
@@ -36,8 +37,8 @@ async def main_menu(callback: types.CallbackQuery):
                 "expiredIn": 9999
                 }
             async with httpx.AsyncClient() as client:
-                r = await client.post("https://pay.ton-rocket.com/tg-invoices", json=req, headers={"Rocket-Pay-Key": "{ROCKET}"})
-            
+                r = await client.post("https://pay.ton-rocket.com/tg-invoices", json=req, headers={"Rocket-Pay-Key": ROCKET})
+            print(r.json())
             link = r.json()['data']['link']
             await callback.message.edit_reply_markup(reply_markup=get_pay_keyboard(link))
             print(link)
